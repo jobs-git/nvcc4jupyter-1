@@ -43,7 +43,7 @@ class NVCCPlugin(ipym.Magics):
             with open(file_path + ext, "w") as f:
                 f.write(cell)
             try:
-                subprocess.check_output([compiler, '-I/usr/local/cuda/samples/common/inc/', '-L/usr/local/cuda/include', '-lcublas', '-lcusolver', '-lcudnn', '-lcufft', '-lcurand', '-lcusparse', '-lcutensor', '--gpu-architecture=sm_75', '-Wno-deprecated-gpu-targets', file_path + ext, "-o", file_path + ".out"], stderr=subprocess.STDOUT)
+                subprocess.check_output([compiler, '-I/usr/local/cuda/samples/common/inc/', '-I/usr/local/cuda/include', '-L/usr/local/cuda/lib64', '-lcublas', '-lcusolver', '-lcudnn', '-lcufft', '-lcurand', '-lcusparse', '-lcutensor', '--gpu-architecture=sm_75', '-Xcompiler="-pthread"', '-fopenmp', '-lgomp', '-fopenmp', '-Wno-deprecated-gpu-targets', file_path + ext, "-o", file_path + ".out"], stderr=subprocess.STDOUT)
                 print(self.run(file_path, timeit=args.timeit))
             except subprocess.CalledProcessError as e:
                 print(e.output.decode("utf8"))
