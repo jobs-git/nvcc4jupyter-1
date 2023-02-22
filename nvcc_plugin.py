@@ -50,7 +50,12 @@ class NVCCPlugin(ipym.Magics):
                                          '-L/usr/local/cuda/lib64', 
                                          '-lcublas', '-lcusolver', '-lcudnn', '-lcufft', '-lcurand', '-lcusparse', '-lcutensor', 
                                          '--gpu-architecture=sm_75', '-Wno-deprecated-gpu-targets', 
-                                         '-Xcompiler="-fopenmp"', '-Xlinker="-lm -lgomp -lpthread -lgfortran -lopenblas64"',
+                                         '-Xcompiler="-fopenmp"', 
+                                         '-Xlinker="-lm"',
+                                         '-Xlinker="-lgomp"',
+                                         '-Xlinker="-lpthread"',
+                                         '-Xlinker="-lgfortran"',
+                                         '-Xlinker="-lopenblas64"',
                                          file_path + ext, "-o", file_path + ".out"], stderr=subprocess.STDOUT)
                 print(self.run(file_path, timeit=args.timeit))
             except subprocess.CalledProcessError as e:
